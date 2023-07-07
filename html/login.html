@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ASD Combat - Login</title>
+  <style>
+    /* Add your custom CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f5f9;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-form h2 {
+      font-size: 24px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+
+    .login-form form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-form label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .login-form input {
+      padding: 5px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .login-form button {
+      background-color: #0555ee;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-form button:hover {
+      background-color: #003399;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-form">
+      <h2>Login</h2>
+      <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button onclick="redirectToIndex()">Login</button>
+      </form>
+    </div>
+  </div>
+<script> function redirectToIndex() {
+   
+    window.location.href = "../index.html";
+  }</script>
+  <!-- Add the Firebase SDK scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      // Add your Firebase configuration here
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    // Get references to form elements
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+
+    // Function to handle login
+    function login() {
+      const username = usernameInput.value;
+      const password = passwordInput.value;
+
+      // Sign in with Firebase authentication
+      firebase.auth().signInWithEmailAndPassword(username, password)
+        .then((userCredential) => {
+          // User is signed in
+          const user = userCredential.user;
+          console.log('Logged in:', user);
+          // Redirect to the homepage or another desired page
+          window.location.href = '../index.html';
+        })
+        .catch((error) => {
+          // Error occurred during login
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log('Login error:', errorCode, errorMessage);
+          alert('Login failed. Please try again.');
+        });
+    }
+  </script>
+</body>
+</html>
